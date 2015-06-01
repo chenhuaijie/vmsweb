@@ -18,6 +18,11 @@ import com.tlal.vms.base.utils.Pager;
 import com.tlal.vms.vms.func.admin.car.entity.Car;
 import com.tlal.vms.vms.func.admin.car.service.AdminCarIService;
 
+/**
+ * 车辆信息的逻辑控制器
+ * @author Administrator
+ *
+ */
 @Namespace("/admin/car")
 public class AdminCarAction extends BaseAction{
 	private static final long serialVersionUID = 1877523299211116686L;
