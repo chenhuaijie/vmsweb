@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.tlal.vms.vms.sys.login.dao.UserDAO"><!-- 映射到手工编写的映射器UserDAO -->
+	<!-- 根据id查找User记录 -->
+	<select id="findById" parameterType="java.lang.String" resultType="com.tlal.vms.vms.sys.login.entity.User">
+		SELECT USERID,NAME,NICKNAME,EMAIL,PHONENUMBER,ROLE,DEPT,PASSWORD,COMPANY
+			FROM USER 
+			WHERE USERID=#{userid}
+	</select>
+	<!-- 查找所有的管理员 -->
+	<select id="listAdmins" resultType="com.tlal.vms.vms.sys.supers.admin.pojo.SuperAdminPOJO">
+		SELECT USERID,NAME,NICKNAME,EMAIL,PHONENUMBER,DEPT,COMPANY
+			FROM USER 
+			WHERE ROLE='admin'
+	</select>
+	
+	
+	<!-- 分页查找管理员 -->
+	<select id="findAdminsByPage" parameterType="com.tlal.vms.vms.sys.supers.admin.action.SuperAdminSearch" 
+			resultType="com.tlal.vms.vms.sys.supers.admin.pojo.SuperAdminPOJO">
+		SELECT USERID,NAME,NICKNAME,EMAIL,PHONENUMBER,DEPT,COMPANY
+			FROM USER 
+			<where>
+				  ROLE='admin' 
+				  <!-- 如果姓名不为空 -->
+				  <if test='name != null and !"".equals(name)'>
+				  	AND NAME=#{name}
+				  </if>
+				  <!-- 如果昵称不为空 -->
+				  <if test='nickname != null and !"".equals(nickname)'>
+				  	AND NICKNAME=#{nickname}
+				  </if>
+				   <!-- 如果邮箱不为空 -->
+				  <if test='email != null and !"".equals(email)'>
+				  	AND EMAIL=#{email}
+				  </if>
+				   <!-- 如果电话不为空 -->
+				  <if test='phonenumber != null and !"".equals(phonenumber)'>
+				  	AND PHONENUMBER=#{phonenumber}
+				  </if>
+				   <!-- 如果部门不为空 -->
+				  <if test='dept != null and !"".equals(dept)'>
+				  	AND DEPT=#{dept}
+				  </if>
+				   <!-- 如果公司不为空 -->
+				  <if test='company != null and !"".equals(company)'>
+				  	AND COMPANY=#{company}
+				  </if>
+			  </where>
+			  LIMIT #{startRow},#{pageSize}
+	</select>
+	<!-- 查看管理员的数量 -->
+	<select id="countAdmins" parameterType="com.tlal.vms.vms.sys.supers.admin.action.SuperAdminSearch" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM USER
+			<where>
+				  ROLE='admin' 
+				  <!-- 如果姓名不为空 -->
+				  <if test='name != null and !"".equals(name)'>
+				  	AND NAME=#{name}
+				  </if>
+				  <!-- 如果昵称不为空 -->
+				  <if test='nickname != null and !"".equals(nickname)'>
+				  	AND NICKNAME=#{nickname}
+				  </if>
+				   <!-- 如果邮箱不为空 -->
+				  <if test='email != null and !"".equals(email)'>
+				  	AND EMAIL=#{email}
+				  </if>
+				   <!-- 如果电话不为空 -->
+				  <if test='phonenumber != null and !"".equals(phonenumber)'>
+				  	AND PHONENUMBER=#{phonenumber}
+				  </if>
+				   <!-- 如果部门不为空 -->
+				  <if test='dept != null and !"".equals(dept)'>
+				  	AND DEPT=#{dept}
+				  </if>
+				   <!-- 如果公司不为空 -->
+				  <if test='company != null and !"".equals(company)'>
+				  	AND COMPANY=#{company}
+				  </if>
+			  </where>
+	</select>
+	
+	<!-- 分页查找用户 -->
+	<select id="findUsersByPage" parameterType="com.tlal.vms.vms.func.admin.user.action.AdminUserSearch" 
+	resultType="com.tlal.vms.vms.func.admin.user.pojo.AdminUserPOJO">
+		SELECT USERID,NAME,NICKNAME,EMAIL,PHONENUMBER,DEPT,COMPANY
+			FROM USER 
+			<where>
+				  ROLE='user' 
+				  <!-- 如果姓名不为空 -->
+				  <if test='name != null and !"".equals(name)'>
+				  	AND NAME=#{name}
+				  </if>
+				  <!-- 如果昵称不为空 -->
+				  <if test='nickname != null and !"".equals(nickname)'>
+				  	AND NICKNAME=#{nickname}
+				  </if>
+				   <!-- 如果邮箱不为空 -->
+				  <if test='email != null and !"".equals(email)'>
+				  	AND EMAIL=#{email}
+				  </if>
+				   <!-- 如果电话不为空 -->
+				  <if test='phonenumber != null and !"".equals(phonenumber)'>
+				  	AND PHONENUMBER=#{phonenumber}
+				  </if>
+				   <!-- 如果部门不为空 -->
+				  <if test='dept != null and !"".equals(dept)'>
+				  	AND DEPT=#{dept}
+				  </if>
+				   <!-- 如果公司不为空 -->
+				  <if test='company != null and !"".equals(company)'>
+				  	AND COMPANY=#{company}
+				  </if>
+			  </where>
+		    LIMIT #{startRow},#{pageSize}
+	</select>
+	<!-- 查看用户的数量 -->
+	<select id="countUsers" parameterType="com.tlal.vms.vms.func.admin.user.action.AdminUserSearch"  resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM USER
+			<where>
+				  ROLE='user' 
+				  <!-- 如果姓名不为空 -->
+				  <if test='name != null and !"".equals(name)'>
+				  	AND NAME=#{name}
+				  </if>
+				  <!-- 如果昵称不为空 -->
+				  <if test='nickname != null and !"".equals(nickname)'>
+				  	AND NICKNAME=#{nickname}
+				  </if>
+				   <!-- 如果邮箱不为空 -->
+				  <if test='email != null and !"".equals(email)'>
+				  	AND EMAIL=#{email}
+				  </if>
+				   <!-- 如果电话不为空 -->
+				  <if test='phonenumber != null and !"".equals(phonenumber)'>
+				  	AND PHONENUMBER=#{phonenumber}
+				  </if>
+				   <!-- 如果部门不为空 -->
+				  <if test='dept != null and !"".equals(dept)'>
+				  	AND DEPT=#{dept}
+				  </if>
+				   <!-- 如果公司不为空 -->
+				  <if test='company != null and !"".equals(company)'>
+				  	AND COMPANY=#{company}
+				  </if>
+			  </where>
+	</select>
+	
+	<!-- 查找所有用户 -->
+	<select id="findAllUsers" resultType="com.tlal.vms.vms.sys.login.entity.User">
+		SELECT USERID,NAME,NICKNAME,EMAIL,PHONENUMBER,ROLE,DEPT,PASSWORD,COMPANY 
+			FROM USER 
+			WHERE ROLE='user'
+	</select>
+	<!-- 根据username查找User记录 -->
+	<select id="findByUserName" parameterType="java.lang.String" resultType="com.tlal.vms.vms.sys.login.entity.User">
+		SELECT USERID,NAME,NICKNAME,EMAIL,PHONENUMBER,ROLE,DEPT,PASSWORD,COMPANY
+			FROM USER 
+			WHERE NAME=#{name}
+	</select>	
+	<!-- 根据用户名和密码查找用户 -->
+	<select id="findByUserNameAndPwd" parameterType="com.tlal.vms.vms.sys.login.entity.User" resultType="com.tlal.vms.vms.sys.login.entity.User">
+		SELECT USERID,NAME,NICKNAME,EMAIL,PHONENUMBER,ROLE,DEPT,PASSWORD,COMPANY 
+			 FROM USER
+			 WHERE NAME=#{name} AND PASSWORD=#{password}
+	</select>
+	<!-- 添加User记录 -->
+	<insert id="addUser" parameterType="com.tlal.vms.vms.sys.login.entity.User">
+		 INSERT INTO USER
+		 (	 USERID,NAME,NICKNAME,
+		 	 EMAIL,PHONENUMBER,ROLE,
+		 	 DEPT,PASSWORD,COMPANY 
+		 ) 
+		 VALUES
+		 (	 #{userid,jdbcType=VARCHAR},
+			 #{name,jdbcType=VARCHAR},
+			 #{nickname,jdbcType=VARCHAR},
+			 #{email,jdbcType=VARCHAR},
+			 #{phonenumber,jdbcType=VARCHAR},
+			 #{role,jdbcType=VARCHAR},
+			 #{dept,jdbcType=VARCHAR},
+			 #{password,jdbcType=VARCHAR},
+	 		 #{company,jdbcType=VARCHAR}
+	 	 )	 		
+	</insert>
+	
+	<!-- 删除User记录 -->
+	<delete id="deleteUser" parameterType="java.lang.String">
+		DELETE FROM USER 
+			WHERE USERID=#{userid}
+	</delete>
+	
+	<!-- 更新User记录 -->
+	<update id="updateUser" parameterType="com.tlal.vms.vms.sys.login.entity.User">
+		UPDATE USER SET
+			NAME = #{name,jdbcType=VARCHAR},
+			NICKNAME = #{nickname,jdbcType=VARCHAR},
+			EMAIL = #{email,jdbcType=VARCHAR},
+			PHONENUMBER = #{phonenumber,jdbcType=VARCHAR},
+			ROLE = #{role,jdbcType=VARCHAR},
+			DEPT = #{dept,jdbcType=VARCHAR},
+			PASSWORD = #{password,jdbcType=VARCHAR},
+	 		COMPANY = #{company,jdbcType=VARCHAR}
+ 		WHERE USERID = #{userid}
+	</update>
+</mapper>

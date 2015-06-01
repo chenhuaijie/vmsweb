@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.tlal.vms.vms.func.admin.car.dao.CarDAO"><!-- 映射到手工编写的映射器UserDAO -->
+	<!-- 分页查找Car -->
+	<select id="findCarByPage" parameterType="com.tlal.vms.vms.func.admin.car.action.AdminCarSearch" 
+							   resultType="com.tlal.vms.vms.func.admin.car.entity.Car">
+		SELECT CARID,NAME,PLATE_NUM,TYPE,STATUS,ORIGIN
+			FROM CAR
+			 <where>
+				  <!-- 如果车名输入不为空 -->
+				  <if test='name != null and !"".equals(name)'>
+				  	and NAME=#{name}
+				  </if>
+				  <!-- 如果车牌号输入不为空 -->
+				  <if test='plate_num != null and !"".equals(plate_num)'>
+				  	and PLATE_NUM=#{plate_num}
+				  </if>
+				  <!-- 如果汽车类型输入不为空 -->
+				  <if test='type != null and !"".equals(type)'>
+				  	and TYPE=#{type}
+				  </if>
+				  <!-- 如果汽车状态输入不为空 -->
+				  <if test='status != null and !"default".equals(status)'>
+				  	and STATUS=#{status}
+				  </if>
+				  <!-- 如果汽车来源输入不为空 -->
+				  <if test='origin != null and !"default".equals(origin)'>
+				  	and ORIGIN=#{origin}
+				  </if>
+			  </where>
+			LIMIT #{startRow},#{pageSize}
+	</select>
+	<!-- 查看车辆的数量 -->
+	<select id="countCars" parameterType="com.tlal.vms.vms.func.admin.car.action.AdminCarSearch" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM CAR
+		 <where>
+			  <!-- 如果车名输入不为空 -->
+			  <if test='name != null and !"".equals(name)'>
+			  	and NAME=#{name}
+			  </if>
+			  <!-- 如果车牌号输入不为空 -->
+			  <if test='plate_num != null and !"".equals(plate_num)'>
+			  	and PLATE_NUM=#{plate_num}
+			  </if>
+			  <!-- 如果汽车类型输入不为空 -->
+			  <if test='type != null and !"".equals(type)'>
+			  	and TYPE=#{type}
+			  </if>
+			  <!-- 如果汽车状态输入不为空 -->
+			  <if test='status != null and !"default".equals(status)'>
+			  	and STATUS=#{status}
+			  </if>
+			  <!-- 如果汽车来源输入不为空 -->
+			  <if test='origin != null and !"default".equals(origin)'>
+			  	and ORIGIN=#{origin}
+			  </if>
+		  </where>
+	</select>
+	
+	
+	<!-- 根据id查找Car -->
+	<select id="findCarById" parameterType="java.lang.String" resultType="com.tlal.vms.vms.func.admin.car.entity.Car">
+		SELECT CARID,NAME,PLATE_NUM,TYPE,STATUS,ORIGIN
+			FROM CAR
+			WHERE CARID=#{carid}
+	</select>
+	
+	<!-- 设置车辆未租用 -->
+	<update id="setCarUnRent" parameterType="java.lang.String">
+		UPDATE CAR SET
+			STATUS = 'N'
+			WHERE CARID=#{carid}
+	</update>
+	<!-- 设置车辆已租用 -->
+	<update id="setCarRent" parameterType="java.lang.String">
+		UPDATE CAR SET
+			STATUS = 'Y'
+			WHERE CARID=#{carid}
+	</update>
+	<!-- 添加Car记录 -->
+	<insert id="addCar" parameterType="com.tlal.vms.vms.func.admin.car.entity.Car">
+		 INSERT INTO CAR
+		 (	 
+		 	 CARID,NAME,PLATE_NUM,
+		 	 TYPE,STATUS,ORIGIN
+		 ) 
+		 VALUES
+		 (	 #{carid,jdbcType=VARCHAR},
+			 #{name,jdbcType=VARCHAR},
+			 #{plate_num,jdbcType=VARCHAR},
+			 #{type,jdbcType=VARCHAR},
+			 #{status,jdbcType=VARCHAR},
+			 #{origin,jdbcType=VARCHAR}
+	 	 )	 		
+	</insert>
+	<!-- 删除Car记录 -->
+	<delete id="deleteCarById" parameterType="java.lang.String">
+		DELETE FROM CAR 
+			WHERE CARID=#{carid}
+	</delete>
+	<!-- 更新Car记录 -->
+	<!-- 更新User记录 -->
+	<update id="updateCar" parameterType="com.tlal.vms.vms.func.admin.car.entity.Car">
+		UPDATE CAR SET
+			NAME = #{name,jdbcType=VARCHAR},
+			PLATE_NUM = #{plate_num,jdbcType=VARCHAR},
+			TYPE = #{type,jdbcType=VARCHAR},
+		 	STATUS = #{status,jdbcType=VARCHAR},
+		 	ORIGIN = #{origin,jdbcType=VARCHAR}
+ 		WHERE CARID = #{carid}
+	</update>
+	<!-- 根据车牌号查找车辆信息 -->
+	<select id="findCarByPlateNum" parameterType="java.lang.String" resultType="com.tlal.vms.vms.func.admin.car.entity.Car">
+		SELECT CARID,NAME,PLATE_NUM,TYPE,STATUS,ORIGIN
+			FROM CAR
+			WHERE PLATE_NUM = #{plate_num}
+	</select>
+	<!-- 根据车牌号查找车辆信息 -->
+	<select id="findCarLikePlateNum" parameterType="java.lang.String" resultType="com.tlal.vms.vms.func.admin.car.entity.Car">
+		SELECT CARID,NAME,PLATE_NUM,TYPE,STATUS,ORIGIN
+			FROM CAR
+			WHERE PLATE_NUM LIKE CONCAT('%',#{plate_num},'%')
+	</select>
+	
+	<!-- 分页查找Car -->
+	<select id="findCarByPage_User" parameterType="com.tlal.vms.vms.func.user.car.action.UserCarSearch" 
+							   resultType="com.tlal.vms.vms.func.admin.car.entity.Car">
+		SELECT CARID,NAME,PLATE_NUM,TYPE,STATUS,ORIGIN
+			FROM CAR
+			 <where>
+				  <!-- 如果车名输入不为空 -->
+				  <if test='name != null and !"".equals(name)'>
+				  	and NAME=#{name}
+				  </if>
+				  <!-- 如果车牌号输入不为空 -->
+				  <if test='plate_num != null and !"".equals(plate_num)'>
+				  	and PLATE_NUM=#{plate_num}
+				  </if>
+				  <!-- 如果汽车类型输入不为空 -->
+				  <if test='type != null and !"".equals(type)'>
+				  	and TYPE=#{type}
+				  </if>
+				  <!-- 如果汽车状态输入不为空 -->
+				  <if test='status != null and !"default".equals(status)'>
+				  	and STATUS=#{status}
+				  </if>
+				  <!-- 如果汽车来源输入不为空 -->
+				  <if test='origin != null and !"default".equals(origin)'>
+				  	and ORIGIN=#{origin}
+				  </if>
+			  </where>
+			LIMIT #{startRow},#{pageSize}
+	</select>
+	<!-- 查看车辆的数量 -->
+	<select id="countCars_User" parameterType="com.tlal.vms.vms.func.user.car.action.UserCarSearch" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM CAR
+		 <where>
+			  <!-- 如果车名输入不为空 -->
+			  <if test='name != null and !"".equals(name)'>
+			  	and NAME=#{name}
+			  </if>
+			  <!-- 如果车牌号输入不为空 -->
+			  <if test='plate_num != null and !"".equals(plate_num)'>
+			  	and PLATE_NUM=#{plate_num}
+			  </if>
+			  <!-- 如果汽车类型输入不为空 -->
+			  <if test='type != null and !"".equals(type)'>
+			  	and TYPE=#{type}
+			  </if>
+			  <!-- 如果汽车状态输入不为空 -->
+			  <if test='status != null and !"default".equals(status)'>
+			  	and STATUS=#{status}
+			  </if>
+			  <!-- 如果汽车来源输入不为空 -->
+			  <if test='origin != null and !"default".equals(origin)'>
+			  	and ORIGIN=#{origin}
+			  </if>
+		  </where>
+	</select>
+</mapper>
