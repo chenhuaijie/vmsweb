@@ -19,6 +19,12 @@ import com.tlal.vms.vms.func.admin.user.pojo.AdminUserPOJO;
 import com.tlal.vms.vms.func.admin.user.service.AdminUserIService;
 import com.tlal.vms.vms.sys.login.dao.UserDAO;
 import com.tlal.vms.vms.sys.login.entity.User;
+
+/**
+ * 管理员-用户逻辑实现类
+ * @author Administrator
+ *
+ */
 @Namespace("/admin/user")
 public class AdminUserAction extends BaseAction{
 	private static final long serialVersionUID = 516496322997104192L;
