@@ -15,6 +15,11 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.tlal.vms.base.enums.enumc.TipTypeEnum;
 import com.tlal.vms.base.utils.WebUtil;
 
+/**
+ * Action类的基类
+ * @author Administrator
+ *
+ */
 @ParentPackage("basePackage")
 @Namespace("/")
 public abstract class BaseAction extends ActionSupport implements ModelDriven<Object>{
