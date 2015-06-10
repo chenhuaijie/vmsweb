@@ -9,6 +9,11 @@ import org.apache.struts2.ServletActionContext;
 
 import com.alibaba.fastjson.JSON;
 
+/**
+ * Ajax的基类
+ * @author Administrator
+ *
+ */
 public class BaseAjax {
 	/**
 	 * 把Object对象以json方式写回前台
